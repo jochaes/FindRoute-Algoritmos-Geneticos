@@ -1,10 +1,6 @@
 # FindRoute-Algoritmos-Geneticos
 Proyecto 2 del curso de Análisis de Algoritmos. Sobre el tema de Algoritmos Genéticos 
 
-
-# Automatized 8-Puzzle Game :brain:
-First approach to automatized and 8-Puzzle game using backtracking and A* algorithms.
-
 ![](https://img.shields.io/badge/JavaScript-ED8B00?style=for-the-badge&logo=javascript&logoColor=white) ![](https://img.shields.io/badge/-CSS3-blue?style=for-the-badge&logo=css3&logoColor=white) ![](https://img.shields.io/badge/-HTML-red?style=for-the-badge&logo=html5&logoColor=white) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 ## Description 

@@ -32,3 +32,4 @@ Proyecto 2 del curso de Análisis de Algoritmos. Sobre el tema de Algoritmos Gen
 - We want to thank [Geekforgeeks](https://www.geeksforgeeks.org), we use this [algorithm](https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/)
 
 ## License
+This project is currently using [MIT license](https://www.mit.edu/~amini/LICENSE.md)

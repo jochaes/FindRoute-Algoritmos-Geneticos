@@ -288,8 +288,9 @@ class Individuo {
   /** Calcula el fitness del individuo según la distancia del final y la cantidad de movimientos precisos que realiza */
   calcularFitness() {
     let distDelDestino = Math.abs(this.entorno.puntoFinal[0] - this.posicion[0]) + Math.abs(this.entorno.puntoFinal[1] - this.posicion[1]);
-    let ponderacionPremios = (1 + (0.5 - (this.premiosObtenidos.length * 0.1)));
-    this.fitness = (distDelDestino + (Math.abs(this.entorno.cantMovOptimos - this.gen.length) / this.gen.length)) * ponderacionPremios;
+    let ponderacionPremios = (0.5 - (this.premiosObtenidos.length * 0.1));
+    //this.fitness = (distDelDestino + (Math.abs(this.entorno.cantMovOptimos - this.gen.length) / this.gen.length)) * ponderacionPremios;
+    this.fitness = (distDelDestino * ponderacionPremios) + distDelDestino;
   }
 
   /** @returns {String} Una cadena con el mejor movimiento posible del individuo. */
@@ -334,11 +335,12 @@ class Individuo {
       }
       if (!this.mover(movimiento)) { break; }
       genFinal += movimiento;
+      if (this.entorno.tablero[this.posicion[0]][this.posicion[1]] == 3) { this.llego = true; break;}
     }
     this.gen = genFinal;
     // Verificamos si llegamos al destino
-    if (this.entorno.tablero[this.posicion[0]][this.posicion[1]] == 3) { this.llego = true; }
-    else { this.generarVidaAleatoria(); }
+    //-- if (this.entorno.tablero[this.posicion[0]][this.posicion[1]] == 3) { this.llego = true; }
+    if (!this.llego) { this.generarVidaAleatoria(); }
   }
 
   /** Si no existe un gen previo, se mueve de forma aleatoria */

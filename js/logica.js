@@ -27,7 +27,7 @@
  * @param {double} prcCruce Probabilidad de que un individuo cruce.
  * @param {int} maxGeneraciones Máximo de generaciones posibles.
  */
-class Entorno {
+ class Entorno {
   /**
    * Constructor principal.
    * @description Representa el entorno en el que se va a desarrollar la simulación.
@@ -51,6 +51,7 @@ class Entorno {
     // Entidades del entorno 
     this.tablero = [];
     this.poblacion = [];
+    this.premios = [];
     this.individuoGanador = null;
     this.inicializar();
   }
@@ -65,6 +66,15 @@ class Entorno {
       this.tablero = [];
       this.inicializar();
     }
+  }
+
+  colocarPremio(x, y) {
+    if (x < 0 || x >= this.tamTablero || y < 0 || y >= this.tamTablero) { return false; }
+    if (this.tablero == [] || this.tablero[x][y] != 0 || this.premios.length >= 5) { return false; }
+    this.premios.push([x, y]);
+    this.tablero[x][y] = 4;
+    console.log("listo");
+    return true;
   }
 
   /** Genera la población inicial del entorno. */
@@ -159,6 +169,9 @@ class Entorno {
         if (this.tablero[i][j] == 1) { linea += "# "; continue; }
         if (this.tablero[i][j] == 2) { linea += "I "; continue; }
         if (this.tablero[i][j] == 3) { linea += "F "; continue; }
+        if (this.tablero[i][j] == 4) { linea += "O "; continue; }
+        if (this.tablero[i][j] == 8) { linea += "\u00A4 "; continue; }
+        if (this.tablero[i][j] == 9) { linea += "\u00D7 "; continue; }
         linea += "  ";
       }
       console.log(linea);
@@ -218,11 +231,26 @@ class Individuo {
     this.gen = gen;
     this.posicion = posicion;
     this.etiqueta = etiqueta;
+    this.premiosObtenidos = [];
     this.fitness = 0;
     this.fitnessPadre = fitnessPadre;
     this.vivo = true;
     this.llego = false;
     this.movimientos = ["U", "D", "L", "R"];
+  }
+
+  verRecorrido() {
+    let x = this.entorno.puntoInicial[0];
+    let y = this.entorno.puntoInicial[1];
+    for (let i = 0; i < this.gen.length; i++) {
+      let mov = this.gen[i];  
+      if (mov == "U") { x--; }
+      if (mov == "D") { x++; }
+      if (mov == "L") { y--; }
+      if (mov == "R") { y++; }
+      if (this.entorno.tablero[x][y] == 0) { this.entorno.tablero[x][y] = 9 };
+      if (this.entorno.tablero[x][y] == 4) { this.entorno.tablero[x][y] = 8 }; // Agarro un premio
+    }
   }
 
   /** @returns {String} Una cadena con el genotipo mutado del individuo. */
@@ -260,7 +288,8 @@ class Individuo {
   /** Calcula el fitness del individuo según la distancia del final y la cantidad de movimientos precisos que realiza */
   calcularFitness() {
     let distDelDestino = Math.abs(this.entorno.puntoFinal[0] - this.posicion[0]) + Math.abs(this.entorno.puntoFinal[1] - this.posicion[1]);
-    this.fitness = distDelDestino + (Math.abs(this.entorno.cantMovOptimos - this.gen.length) / this.gen.length);
+    let ponderacionPremios = (1 + (0.5 - (this.premiosObtenidos.length * 0.1)));
+    this.fitness = (distDelDestino + (Math.abs(this.entorno.cantMovOptimos - this.gen.length) / this.gen.length)) * ponderacionPremios;
   }
 
   /** @returns {String} Una cadena con el mejor movimiento posible del individuo. */
@@ -337,6 +366,12 @@ class Individuo {
     let y = this.posicion[1];
     // Verificamos que no se esté moviendo desde la meta
     if (this.entorno.tablero[x][y] == 3 || this.entorno.tablero[x][y] == 1) { return false; }
+    if (this.entorno.tablero[x][y] == 4 && this.premiosObtenidos.length <= 5) {
+      for (let i = 0; i < this.premiosObtenidos.length; i++) {
+        if (this.premiosObtenidos[i][0] == x && this.premiosObtenidos[i][1] == y) { break; }
+      }
+      this.premiosObtenidos.push([x, y]);
+    }
     switch (movimiento) {
       case "U":
         x -= 1; break;
@@ -410,15 +445,21 @@ class Nodo {
 //let ent = new Entorno(25, 10, [4, 4], [22, 22], "", 0.05, 0.5, 0.5, 1000);
 let ent = new Entorno(25, 10, [22, 22], [4, 4], "", 0.05, 0.5, 0.5, 1000);
 ent.generarPoblacionBase();
+ent.colocarPremio(5, 5);
+ent.colocarPremio(10, 11);
+
 
 let terminado = false;
 while (!terminado) { /*terminado = ent.simularEtapa();*/ ent.simularEtapa(); terminado = ent.encontroSolucion; }
 
 if (ent.individuoGanador != null) {
   let ganador = ent.individuoGanador;
+  ganador.verRecorrido();
   console.log("(owo) " + "[" + ent.generacion + "]" + ganador.etiqueta + ": " + ganador.gen + " " + ganador.fitness + " " + ganador.posicion);
   //console.log("Ultima generacion: ");
   for (let i = 0; i < ent.tamPoblacion; i++) {
     //console.log(ent.poblacion[i].etiqueta + ": " + ent.poblacion[i].gen + " " + ent.poblacion[i].fitness + " " + ent.poblacion[i].posicion);
   }
 }
+
+ent.imprimirTablero();

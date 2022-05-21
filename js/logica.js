@@ -94,6 +94,7 @@
   simularEtapa() {
     if (this.generacion == this.maxGeneraciones) { return; }
     this.generacion++;
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~\nGeneracion: " + this.generacion);
     for (let i = 0; i < this.poblacion.length; i++) {
       this.poblacion[i].posicion = [this.puntoInicial[0], this.puntoInicial[1]];
       this.poblacion[i].fitness = 0;
@@ -101,13 +102,14 @@
       this.poblacion[i].calcularFitness();
       if (this.poblacion[i].fitness == 0 || (this.poblacion[i].posicion[0] == this.puntoFinal[0] && this.poblacion[i].posicion[1] == this.puntoFinal[1])) {
         if (this.individuoGanador != null) {
-          if (this.individuoGanador.fitness > this.poblacion[i].fitness) { this.individuoGanador = this.poblacion[i]; }
+          if (this.individuoGanador.fitness > this.poblacion[i].fitness) { this.individuoGanador = this.poblacion[i]; this.encontroSolucion = true; }
         }
         else {
           this.encontroSolucion = true;
           this.individuoGanador = this.poblacion[i];
         }
       }
+      console.log(this.poblacion[i].etiqueta + " | " + this.poblacion[i].gen + " | " + this.poblacion[i].fitness + " | " + this.poblacion[i].posicion + " | " + this.poblacion[i].premiosObtenidos.length);
     }
     if (!this.encontroSolucion) { this.generarNuevaPoblacion(); }
   }
@@ -133,6 +135,7 @@
       if (hijo == null) {
         hijo = new Individuo(this, poblacionNueva[0].gen.substring(0, Math.floor(poblacionNueva[0].gen.length / 2)), [this.puntoInicial[0], this.puntoInicial[1]], "Individuo " + poblacionNueva.length);
         hijo.fitness = 0;
+        hijo.premiosObtenidos = [];
         if (Math.random() * 1 < this.prcMutacion) { hijo = hijo.mutar(); }
       }
       hijo.vivir();
@@ -290,7 +293,7 @@ class Individuo {
     let distDelDestino = Math.abs(this.entorno.puntoFinal[0] - this.posicion[0]) + Math.abs(this.entorno.puntoFinal[1] - this.posicion[1]);
     let ponderacionPremios = (0.5 - (this.premiosObtenidos.length * 0.1));
     //this.fitness = (distDelDestino + (Math.abs(this.entorno.cantMovOptimos - this.gen.length) / this.gen.length)) * ponderacionPremios;
-    this.fitness = (distDelDestino * ponderacionPremios) + distDelDestino;
+    this.fitness = (distDelDestino * ponderacionPremios) + ((this.entorno.premios.length - this.premiosObtenidos.length) * 2);
   }
 
   /** @returns {String} Una cadena con el mejor movimiento posible del individuo. */
@@ -369,10 +372,14 @@ class Individuo {
     // Verificamos que no se esté moviendo desde la meta
     if (this.entorno.tablero[x][y] == 3 || this.entorno.tablero[x][y] == 1) { return false; }
     if (this.entorno.tablero[x][y] == 4 && this.premiosObtenidos.length <= 5) {
+      let agregarPremio = true;
       for (let i = 0; i < this.premiosObtenidos.length; i++) {
-        if (this.premiosObtenidos[i][0] == x && this.premiosObtenidos[i][1] == y) { break; }
+        if (this.premiosObtenidos[i][0] == x && this.premiosObtenidos[i][1] == y) { agregarPremio = false; }
       }
-      this.premiosObtenidos.push([x, y]);
+      if (agregarPremio) {
+        let nuevoPremio = [x, y];
+        this.premiosObtenidos.push(nuevoPremio);
+      }
     }
     switch (movimiento) {
       case "U":
@@ -457,7 +464,7 @@ while (!terminado) { /*terminado = ent.simularEtapa();*/ ent.simularEtapa(); ter
 if (ent.individuoGanador != null) {
   let ganador = ent.individuoGanador;
   ganador.verRecorrido();
-  console.log("(owo) " + "[" + ent.generacion + "]" + ganador.etiqueta + ": " + ganador.gen + " " + ganador.fitness + " " + ganador.posicion);
+  console.log("[" + ent.generacion + "]" + ganador.etiqueta + ": " + ganador.gen + " " + ganador.fitness + " " + ganador.posicion + " " + ganador.premiosObtenidos.length);
   //console.log("Ultima generacion: ");
   for (let i = 0; i < ent.tamPoblacion; i++) {
     //console.log(ent.poblacion[i].etiqueta + ": " + ent.poblacion[i].gen + " " + ent.poblacion[i].fitness + " " + ent.poblacion[i].posicion);

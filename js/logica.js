@@ -14,6 +14,8 @@
  *              servir en el cálculo de la distancia mínima entre los puntos objetivo.
  */
 
+
+
 /**
  * @class Entorno.
  * @classdesc Representa el entorno de juego en donde viviran los individuos.
@@ -27,6 +29,7 @@
  * @param {double} prcCruce Probabilidad de que un individuo cruce.
  * @param {int} maxGeneraciones Máximo de generaciones posibles.
  */
+
  class Entorno {
   /**
    * Constructor principal.
@@ -111,6 +114,7 @@
       }
       console.log(this.poblacion[i].etiqueta + " | " + this.poblacion[i].gen + " | " + this.poblacion[i].fitness + " | " + this.poblacion[i].posicion + " | " + this.poblacion[i].premiosObtenidos.length);
     }
+
     if (!this.encontroSolucion) { this.generarNuevaPoblacion(); }
   }
 
@@ -450,6 +454,7 @@ class Nodo {
     this.historial = historial;
   }
 }
+
 // Tamaño del tablero (15-30), cant. poblacion (8-20), punto inicial, punto final, gen inicial, prcObstaculos (.10-.25), prcMutacion (.10-.80), prcCruce, cantMaxGeneraciones (100-1500)
 //let ent = new Entorno(25, 10, [4, 4], [22, 22], "", 0.05, 0.5, 0.5, 1000);
 let ent = new Entorno(25, 10, [22, 22], [4, 4], "", 0.05, 0.5, 0.5, 1000);

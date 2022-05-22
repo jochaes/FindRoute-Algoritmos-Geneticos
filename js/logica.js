@@ -467,10 +467,10 @@ class Nodo {
 // Tamaño del tablero (15-30), cant. poblacion (8-20), punto inicial, punto final, gen inicial, prcObstaculos (.10-.25), prcMutacion (.10-.80), prcCruce, cantMaxGeneraciones (100-1500)
 //let ent = new Entorno(25, 10, [4, 4], [22, 22], "", 0.05, 0.5, 0.5, 1000);
 //let ent = new Entorno(25, 10, [22, 22], [4, 4], "", 0.05, 0.5, 0.5, 1000);
-let ent = new Entorno(35, 10, [32, 32], [2, 2], "", 0.05, 0.5, 0.5, 500);
-ent.generarPoblacionBase();
-ent.colocarPremio(5, 5);
-ent.colocarPremio(10, 11);
+// let ent = new Entorno(35, 10, [32, 32], [2, 2], "", 0.05, 0.5, 0.5, 500);
+// ent.generarPoblacionBase();
+// ent.colocarPremio(5, 5);
+// ent.colocarPremio(10, 11);
 
 /*
 

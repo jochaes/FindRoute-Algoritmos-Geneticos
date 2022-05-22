@@ -44,9 +44,16 @@ drawMatrix = ( ventana, pattern, rect,  m_w, m_h, s_w, s_h ) => {
 
 }
 
-drawCircle = (objet, ventana) => {
+/**
+ * Dibuja los circulos 
+ * @param {Array}objet: Atributos de los bicho
+ * @param {SVG}ventana: Es el tablero de juego 
+ * @param {String}id: Es es el identificador del bicho
+ */
+drawCircle = (objet, ventana, id) => {
   let elementFather = document.getElementById(ventana);
-  let circle = document.createElementNS(SVG_NS, 'circle');
+  let circle = document.createElementNS(SVG_NS, "circle");
+  circle.setAttributeNS(null, "id", id);
   for (var name in objet) {
     if (objet.hasOwnProperty(name)) {
       circle.setAttributeNS(null, name, objet[name]);
@@ -134,6 +141,6 @@ drawMatrix( "window","grid", "rect",  matrix_window_w, matrix_window_h, s_w, s_h
 
 ball_r = Math.min( Math.floor(s_w/2), Math.floor(s_h/2) ) -  Math.floor((s_w/5)) //Calcular el radio de la bolita
 
-var objet = {id:"circle_1", cx: Math.floor(s_w/2), cy: Math.floor(s_h/2), r: ball_r, stroke: "green", fill: "yellow" }
+var objet = {cx: Math.floor(s_w/2), cy: Math.floor(s_h/2), r: ball_r, stroke: "green", fill: "yellow" }
 
-circ = drawCircle(objet, "window");
+circ = drawCircle(objet, "window","circle_1");

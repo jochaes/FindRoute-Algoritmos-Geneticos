@@ -3,6 +3,7 @@ class Game {
 
   constructor( pMatrix_window_w, pMatrix_window_h, pM_rows, pM_columns, pVentana, pPattern, pRect  ){
     
+    this.SVG_NS = "http://www.w3.org/2000/svg"
 
     this.m_w = pMatrix_window_w
     this.m_h = pMatrix_window_h
@@ -17,11 +18,8 @@ class Game {
     this.pattern = pPattern
     this.rect    = pRect
 
-    this.SVG_NS = "http://www.w3.org/2000/svg"
-    var ball_r = Math.min( Math.floor(this.s_w/2), Math.floor(this.s_h/2) ) -  Math.floor((this.s_w/5)) //Calcular el radio de la bolita
-    this.testBallObjet = {cx: Math.floor(this.s_w/2), cy: Math.floor(this.s_h/2), r: ball_r, stroke: "green", fill: "yellow" }
-
-
+    this.generacionActual = []
+    
     this.movList = ["R","D","U","L"]   //Lista de movimientos temporal
   }
 
@@ -59,32 +57,32 @@ class Game {
   }
 
 
-  /**
-   * Dibuja los circulos 
-   * @param {Array}objet: Atributos de los bicho
-   * @param {SVG}ventana: Es el tablero de juego 
-   * @param {String}id: Es es el identificador del bicho
-  */
-  drawCircle = (objet, ventana, id) => {
-    let elementFather = document.getElementById(ventana);
-    let circle = document.createElementNS(this.SVG_NS, "circle");
-    circle.setAttributeNS(null, "id", id);
-    for (var name in objet) {
-      if (objet.hasOwnProperty(name)) {
-        circle.setAttributeNS(null, name, objet[name]);
-      }
-    }
-    elementFather.appendChild(circle);
-    return circle;
-  }
+  // /**
+  //  * Dibuja los circulos 
+  //  * @param {Array}objet: Atributos de los bicho
+  //  * @param {SVG}ventana: Es el tablero de juego 
+  //  * @param {String}id: Es es el identificador del bicho
+  // */
+  // drawCircle = (objet, ventana, id) => {
+  //   let elementFather = document.getElementById(ventana);
+  //   let circle = document.createElementNS(this.SVG_NS, "circle");
+  //   circle.setAttributeNS(null, "id", id);
+  //   for (var name in objet) {
+  //     if (objet.hasOwnProperty(name)) {
+  //       circle.setAttributeNS(null, name, objet[name]);
+  //     }
+  //   }
+  //   elementFather.appendChild(circle);
+  //   return circle;
+  // }
 
   random_step = () => {
     return this.movList[Math.floor(Math.random()*this.movList.length)]; 
   } 
 
-  moveOn = (object_id) => {
+  moveOn = (object) => {
 
-    let c= document.getElementById(object_id)
+    let c = document.getElementById(object.id)
   
     //Posicion x,y de la bolita en el cuadrito
     let ball_s_x = Math.floor(this.s_w/2)
@@ -137,7 +135,35 @@ class Game {
   
   }
 
+  sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  eraseIndividuals = () => {
+    this.generacionActual.forEach(element => {
+      element.erase()
+    });
+  }
+
+  drawIndividuals = ( poblacion ) => {
+    this.eraseIndividuals()
+    this.generacionActual = []
+
+    poblacion.forEach(individuo => {
+
+      console.log(individuo.posicion[0], individuo.posicion[1]);
+      var newIndividuo = new dibujoIndividuo(individuo.etiqueta,this.s_w, this.s_h, this.ventana, this.SVG_NS, individuo.posicion[0],individuo.posicion[1] )
+      this.generacionActual.push( newIndividuo )
+    });
+
+
+  }
+  
+
 }
+
+
+
 
 
 

@@ -90,9 +90,10 @@
   generarPoblacionBase() {
     //console.log("generando poblacion....")
     for (let i = 0; i < this.tamPoblacion; i++) {
-      let ind = new Individuo(this, this.genInicial.split('').join(''), [this.puntoInicial[0], this.puntoInicial[1]], ("Individuo " + i));
+      let ind = new Individuo(this, this.genInicial.split('').join(''), [this.puntoInicial[0], this.puntoInicial[1]], ("Individuo_" + i));
       this.poblacion.push(ind);
     }
+
   }
 
   /**
@@ -130,7 +131,7 @@
     let poblacionOrdenada = this.poblacion.sort((a, b) => { return a.fitness - b.fitness; });
     let poblacionNueva = [];
     for (let i = 0; i < 4; i++) {
-      poblacionOrdenada[i].etiqueta = "Individuo " + i;
+      poblacionOrdenada[i].etiqueta = "Individuo_" + i;
       poblacionNueva.push(poblacionOrdenada[i]);
     }
     // Genera la nueva población de la siguiente población. Considerando que sean individuos competentes.
@@ -143,7 +144,7 @@
       if (hijo != null) { hijo = hijo.mutar(); } // cruce previo
       // Si no hubo cruce, ni mutación, se toma al mejor de los elegidos y derivamos al gen desde ahí.
       if (hijo == null) {
-        hijo = new Individuo(this, poblacionNueva[0].gen.substring(0, Math.floor(poblacionNueva[0].gen.length / 2)), [this.puntoInicial[0], this.puntoInicial[1]], "Individuo " + poblacionNueva.length);
+        hijo = new Individuo(this, poblacionNueva[0].gen.substring(0, Math.floor(poblacionNueva[0].gen.length / 2)), [this.puntoInicial[0], this.puntoInicial[1]], "Individuo_" + poblacionNueva.length);
         hijo.fitness = 0;
         hijo.premiosObtenidos = [];
         if (Math.random() * 1 < this.prcMutacion) { hijo = hijo.mutar(); }
@@ -152,7 +153,7 @@
       hijo.calcularFitness();
       // Si el hijo que se originó es competente, lo agregamos a la población.
       if (hijo.fitness < ((poblacionOrdenada[0].fitness + poblacionOrdenada[1].fitness) * 0.88)) {
-        hijo.etiqueta = ("Individuo " + poblacionNueva.length);
+        hijo.etiqueta = ("Individuo_" + poblacionNueva.length);
         poblacionNueva.push(hijo);
       }
     }

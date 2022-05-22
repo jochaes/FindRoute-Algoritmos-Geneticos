@@ -71,6 +71,12 @@
     }
   }
 
+  /**
+   * Intenta colocar un premio dada coordenadas del tablero.
+   * @param {int} x Coordenada en x del tablero.
+   * @param {int} y Coordenada en y del tablero.
+   * @return {boolean} True, si el premio fue colocado. False si no lo fue.
+   */
   colocarPremio(x, y) {
     if (x < 0 || x >= this.tamTablero || y < 0 || y >= this.tamTablero) { return false; }
     if (this.tablero == [] || this.tablero[x][y] != 0 || this.premios.length >= 5) { return false; }
@@ -95,7 +101,7 @@
    * @returns {boolean} true si encontró la solución, false si no.
    */
   simularEtapa() {
-    if (this.generacion == this.maxGeneraciones) { return; }
+    if (this.generacion == this.maxGeneraciones) { this.encontroSolucion = true; return; }
     this.generacion++;
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~\nGeneracion: " + this.generacion);
     for (let i = 0; i < this.poblacion.length; i++) {
@@ -112,7 +118,7 @@
           this.individuoGanador = this.poblacion[i];
         }
       }
-      console.log(this.poblacion[i].etiqueta + " | " + this.poblacion[i].gen + " | " + this.poblacion[i].fitness + " | " + this.poblacion[i].posicion + " | " + this.poblacion[i].premiosObtenidos.length);
+      console.log(this.poblacion[i].etiqueta + " | " + this.poblacion[i].gen + " | " + this.poblacion[i].fitness + " | " + this.poblacion[i].posicion + " | " + this.poblacion[i].premiosObtenidos.length + " ~ " + this.poblacion[i].premiosObtenidos.toString());
     }
 
     if (!this.encontroSolucion) { this.generarNuevaPoblacion(); }
@@ -146,7 +152,6 @@
       hijo.calcularFitness();
       // Si el hijo que se originó es competente, lo agregamos a la población.
       if (hijo.fitness < ((poblacionOrdenada[0].fitness + poblacionOrdenada[1].fitness) * 0.88)) {
-        //hijo.posicion = [this.puntoInicial[0], this.puntoInicial[1]];
         hijo.etiqueta = ("Individuo " + poblacionNueva.length);
         poblacionNueva.push(hijo);
       }
@@ -246,6 +251,10 @@ class Individuo {
     this.movimientos = ["U", "D", "L", "R"];
   }
 
+  /**
+   * Se refleja el recorrido que hizo el individuo en la matriz.
+   * Solamente con propósitos de probar funcionalidad.
+   */
   verRecorrido() {
     let x = this.entorno.puntoInicial[0];
     let y = this.entorno.puntoInicial[1];
@@ -296,7 +305,6 @@ class Individuo {
   calcularFitness() {
     let distDelDestino = Math.abs(this.entorno.puntoFinal[0] - this.posicion[0]) + Math.abs(this.entorno.puntoFinal[1] - this.posicion[1]);
     let ponderacionPremios = (0.5 - (this.premiosObtenidos.length * 0.1));
-    //this.fitness = (distDelDestino + (Math.abs(this.entorno.cantMovOptimos - this.gen.length) / this.gen.length)) * ponderacionPremios;
     this.fitness = (distDelDestino * ponderacionPremios) + ((this.entorno.premios.length - this.premiosObtenidos.length) * 2);
   }
 
@@ -318,7 +326,7 @@ class Individuo {
 
   /** Genera una vida heredada, queriendo decir que existe un gen previo en el individuo. */
   generarVidaHeredada() {
-    if (this.fitnessPadre < 36) {
+    if (this.fitnessPadre < (this.entorno.tamTablero * 1.4)/*36*/) {
       let probSeguirPadre = (1 - ((this.fitnessPadre + 1) / 35));
       for (let i = 0; i < this.gen.length; i++) {
         if (Math.random() * 1 > probSeguirPadre) {
@@ -340,13 +348,13 @@ class Individuo {
         let movContrario = this.obtenerMovContrario(this.gen.charAt(i));
         if (movContrario == this.gen[i - 1]) { continue; }
       }
-      if (!this.mover(movimiento)) { break; }
       genFinal += movimiento;
+      if (!this.mover(movimiento)) { break; }
       if (this.entorno.tablero[this.posicion[0]][this.posicion[1]] == 3) { this.llego = true; break;}
     }
     this.gen = genFinal;
     // Verificamos si llegamos al destino
-    //-- if (this.entorno.tablero[this.posicion[0]][this.posicion[1]] == 3) { this.llego = true; }
+    if (!this.vivo) { return; }
     if (!this.llego) { this.generarVidaAleatoria(); }
   }
 
@@ -397,8 +405,8 @@ class Individuo {
     }
     this.posicion = [x, y];
     if (this.entorno.tablero[x][y] == 3) { this.llego = true; return true; }
-    else if (this.entorno.tablero[x][y] == 1) { return false; }
-    else { return true; }
+    else if (this.entorno.tablero[x][y] == 1) { this.vivo = false; return false; }
+    else { this.vivo = true; return true; }
   }
 
   /** @returns {String} El movimiento contrario a uno dado. */
@@ -457,14 +465,16 @@ class Nodo {
 
 // Tamaño del tablero (15-30), cant. poblacion (8-20), punto inicial, punto final, gen inicial, prcObstaculos (.10-.25), prcMutacion (.10-.80), prcCruce, cantMaxGeneraciones (100-1500)
 //let ent = new Entorno(25, 10, [4, 4], [22, 22], "", 0.05, 0.5, 0.5, 1000);
-let ent = new Entorno(25, 10, [22, 22], [4, 4], "", 0.05, 0.5, 0.5, 1000);
+//let ent = new Entorno(25, 10, [22, 22], [4, 4], "", 0.05, 0.5, 0.5, 1000);
+let ent = new Entorno(15, 10, [13, 13], [2, 2], "", 0.05, 0.5, 0.5, 500);
 ent.generarPoblacionBase();
 ent.colocarPremio(5, 5);
 ent.colocarPremio(10, 11);
 
 
+ent.imprimirTablero();
 let terminado = false;
-while (!terminado) { /*terminado = ent.simularEtapa();*/ ent.simularEtapa(); terminado = ent.encontroSolucion; }
+while (!terminado) { ent.simularEtapa(); terminado = ent.encontroSolucion; }
 
 if (ent.individuoGanador != null) {
   let ganador = ent.individuoGanador;

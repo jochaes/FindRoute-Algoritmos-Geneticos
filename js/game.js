@@ -1,6 +1,16 @@
+/**
+    @class Game
+    @classdesc Se encarga de manejar los aspectos graficos y de movimientos dentro de la matriz que se dibuja en el HTML 
+    @param {int}    pMatrix_window_w  Width de la ventana que muestra la matriz 
+    @param {int}    pMatrix_window_h  height de la ventana que muestra la matriz 
+    @param {int}    pM_rows           Filas que tendrá la matriz 
+    @param {int}    pM_columns        Columnas que tendrá la matriz 
+    @param {string} pVentana          ID del SVG en dónde se pinta la matriz 
+    @param {string} pPattern          El id del patron que tiene el SVG, que pinta los cuadritos
+    @param {string} pRect             El id del rectangulo? que tiene el SVG, que pinta los cuadritos
+ */
 class Game {
   
-
   constructor( pMatrix_window_w, pMatrix_window_h, pM_rows, pM_columns, pVentana, pPattern, pRect  ){
     
     this.SVG_NS = "http://www.w3.org/2000/svg"
@@ -57,7 +67,7 @@ class Game {
   }
 
 
-  // /**
+  // /** 
   //  * Dibuja los circulos 
   //  * @param {Array}objet: Atributos de los bicho
   //  * @param {SVG}ventana: Es el tablero de juego 
@@ -76,18 +86,42 @@ class Game {
   //   return circle;
   // }
 
+  /** 
+    Función de prueba que retorna un movimiento aleatorio de una 
+    lista de movimientos. 
+    
+    @param {String} ventana   id del svg que pinta la matriz 
+    @param {String} m_w       Width en pixeles de la matriz
+    @param {String} m_h       Height en pixeles de la matriz
+    @param {String} pattern   Patron del SVG que contiene los squares y pinta las lineas 
+    @param {String} s_w       Width del cuadrito
+    @param {String} s_h       Heitgh del cuadrito
+    @param {String} grid      Grid del svg que pinta el pattron 
+
+    @returns {String}         Movimiento ( U | D | L | R )
+  */
   random_step = () => {
     return this.movList[Math.floor(Math.random()*this.movList.length)]; 
   } 
 
+
+  /** 
+    Se encarga de mover un individuo, en un movimiento indicado 
+    
+    @param {dibujoIndividuo} object   Objeto que quiere mover, ya que necesita el id para buscar el elemento en el HTML
+    @param {String} move              Moviemento a realizar ( U=up, D=Down, L=left, R=right )
+   
+  */
   moveOn = (object, move) => {
 
-    let c = document.getElementById(object.id)
+    let c = document.getElementById(object.id)     //Busca el individuio en el HTML, dentro del SVG 
   
     //Posicion x,y de la bolita en el cuadrito
+    //Calcula el centro del cuadrito
     let ball_s_x = Math.floor(this.s_w/2)
     let ball_s_y =  Math.floor(this.s_h/2)
-  
+    
+    //Calcula la posición actual de la bolita 
     let x = (c.getAttributeNS(null, "cx") - ball_s_x) / this.s_w
     let y = (c.getAttributeNS(null, "cy") - ball_s_y) / this.s_h
   
@@ -97,7 +131,7 @@ class Game {
     //x is column
     if (step == "R") {
       if (x < this.m_columns - 1) {
-        x = ball_s_x + (x + 1) * this.s_w;
+        x = ball_s_x + (x + 1) * this.s_w;   
         c.setAttributeNS(null, "cx", x);
       }
       else{
@@ -132,26 +166,40 @@ class Game {
         //alert("Can't move on");
       }
     }
-  
   }
 
+  /** 
+    Crea una promesa que detiene la ejecución del programa por unos milisegundos 
+    
+    @param {int} ms Tiempo en milisegundos que detendrá la ejecución
+   
+  */
   sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  /** 
+    Borra los elementos del SVG 
+    
+  */
   eraseIndividuals = () => {
-    console.log('BORRANDO')
-    console.log(this.generacionActual.length)
+    console.log('Borrando Elementos de la Matriz')
 
     this.generacionActual.forEach(element => {
-      console.log("hola");
       element.erase()
     });
 
   }
 
+  /** 
+    Dibuja los individuos en la matriz 
+    
+    @param {Array} poblacion La población de la generación actual, generada por el Algoritmo Genético
+   
+  */
   drawIndividuals = ( poblacion ) => {
-    this.eraseIndividuals()
+    //Antes de empezar borra todos los individuos de la generación pasada
+    this.eraseIndividuals()             
     this.generacionActual = []
 
     poblacion.forEach(individuo => {
@@ -159,11 +207,22 @@ class Game {
 
       var newIndividuo = new dibujoIndividuo(individuo.etiqueta,this.s_w, this.s_h, this.ventana, this.SVG_NS, individuo.posicion[0],individuo.posicion[1], individuo.gen )
       this.generacionActual.push( newIndividuo )
-    });
 
+    });
     
   }
 
+
+  /** 
+    Mueve los individuos, de la generación actual. 
+    Cada individuo tiene su string con los movimientos. 
+    Por cada individuo, se ejecuta el primer movimiento del string, se elimina ese movimeinto,
+      y si el individuo se queda sin movimientos se elimina de la lista. 
+    
+    
+    @param {Array} poblacion La población de la generación actual, generada por el Algoritmo Genético
+   
+  */
   moveIndividuals = async() => {
 
     var listaIndividuos = this.generacionActual
@@ -173,15 +232,16 @@ class Game {
 
       listaIndividuos.forEach(indiv => {
 
+        //Se recorren los movimientos[0] de cada indivudio                                                            
         if (indiv.movimientos.length != 0) {
           this.moveOn(indiv, indiv.movimientos[0])
           indiv.movimientos = indiv.movimientos.slice(1)
         } else{
-          listaIndividuos = listaIndividuos.filter(item => item !== indiv)
+          listaIndividuos = listaIndividuos.filter(item => item !== indiv)  // Si se queda sin movimientos se elimina de la lista
         }
         
       })
-      await this.sleep(50);
+      await this.sleep(50);   //Espera un tiempo para el siguiente movimiento
     }
   }
 

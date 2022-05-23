@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -13,8 +13,8 @@
 </head>
 
 <body>
+
   <div>
-    <button onclick="moveOn()">move</button>
     <div class="container">
       <svg id="window" width="750" height="550">
         <defs>
@@ -23,12 +23,47 @@
             <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1" />
           </pattern>
         </defs>
-
         <rect width="100%" height="100%" fill="url(#grid)" />
-
       </svg>
+    </div>
+  
+      
+      <form onsubmit="return false;" method="post" name="myForm">
+
+        <label for="sizeMatrix">Tamaño de la Matriz (nxn)</label><br>
+        <input type="number" id="sizeMatrix" name="sizeMatrix" min ="15" max="30" value="25"><br>
+
+        <label for="populationSize">Tamaño de la Población</label><br>
+        <input type="number" id="populationSize" name="populationSize" min ="8" max="20" value="10"><br>
+
+        <label for="initPos">Posición Inicial eg. "x,y"</label><br>
+        <input type="tel" id="initPos" name="initPos" pattern=".{1,2},.{1,2}" placeholder="22,22" value="22,22" ><br>
+        
+        <label for="endPos">Posición Final eg. "x,y"</label><br>
+        <input type="tel" id="endPos" name="endPos" pattern=".{1,2},.{1,2}" placeholder="5,5" value="4,4" ><br>
+
+        <label for="gene">Gen Inicial</label><br>
+        <input type="text" id="gene" name="gene" placeholder="UDLR"><br>
+
+        <label for="obsPercentage">Porcentaje de Obstaculos (0% - 100%) </label><br>
+        <input type="number" id="obsPercentage" name="obsPercentage" min ="0" max="100" value="10"><br>
+
+        <label for="mutationPercentage">Porcentaje de Mutación (10% - 80%)</label><br>
+        <input type="number" id="mutationPercentage" name="mutationPercentage" min ="10" max="80" value="10"><br>
+
+        <label for="crossoverPercentage">Porcentaje de Cruce (10% - 80%)</label><br>
+        <input type="number" id="crossoverPercentage" name="crossoverPercentage" min ="10" max="80" value="15"><br>
+
+        <label for="maxGenerations">Cantidad Máxima de Generaciones (100-500)</label><br>
+        <input type="number" id="maxGenerations" name="maxGenerations" min ="100" max="500" value="500"><br>
+
+
+        <input type="submit" name="Empezar Ejecución" onclick="start()" />
+      </form> 
 
     </div>
+
+
   </div>
 
 </body>

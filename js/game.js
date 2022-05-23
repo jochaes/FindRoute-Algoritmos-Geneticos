@@ -289,7 +289,7 @@ class Game {
         }
 
       })
-      await this.sleep(400);   //Espera un tiempo para el siguiente movimiento
+      await this.sleep(100);   //Espera un tiempo para el siguiente movimiento
     }
   }
 

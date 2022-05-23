@@ -18,16 +18,13 @@ const showSolucion  = async() => {
 
     while (!terminado) { 
         ent.simularEtapa();
-        //console.log(ent.poblacion[0].posicion[0]);
-
-
+        //console.log(ent.poblacion[0].gen[0]);
         newGame.drawIndividuals(ent.poblacion)
+        //await newGame.sleep(400);
+        await newGame.moveIndividuals()
 
         terminado = ent.encontroSolucion;
-        await newGame.sleep(400);
-    }
-    
-
+     }
 }
 
 showSolucion()

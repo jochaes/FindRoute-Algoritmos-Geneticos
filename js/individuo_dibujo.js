@@ -2,7 +2,7 @@
 class dibujoIndividuo {
 
 
-    constructor( id_individuo, pCuadro_width, pCuadro_height, pVentana, pSVG_NS, init_row, init_column ){
+    constructor( id_individuo, pCuadro_width, pCuadro_height, pVentana, pSVG_NS, init_row, init_column, pMovimientos ){
         
         this.id = id_individuo
         this.s_w = pCuadro_width
@@ -19,6 +19,8 @@ class dibujoIndividuo {
         this.fill = "yellow"
 
         this.SVG_NS = pSVG_NS
+
+        this.movimientos = pMovimientos
 
         this.drawCircle()
     }

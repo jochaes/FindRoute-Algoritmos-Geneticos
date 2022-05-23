@@ -80,7 +80,7 @@ class Game {
     return this.movList[Math.floor(Math.random()*this.movList.length)]; 
   } 
 
-  moveOn = (object) => {
+  moveOn = (object, move) => {
 
     let c = document.getElementById(object.id)
   
@@ -91,7 +91,7 @@ class Game {
     let x = (c.getAttributeNS(null, "cx") - ball_s_x) / this.s_w
     let y = (c.getAttributeNS(null, "cy") - ball_s_y) / this.s_h
   
-    let step = this.random_step(this.movList);
+    let step = move
     //let step = "R"
   
     //x is column
@@ -101,7 +101,7 @@ class Game {
         c.setAttributeNS(null, "cx", x);
       }
       else{
-        alert("Can't move on");
+        //alert("Can't move on");
       }
     }
     if (step == "L") {
@@ -110,7 +110,7 @@ class Game {
         c.setAttributeNS(null, "cx", x);
       }
       else{
-        alert("Can't move on");
+        //alert("Can't move on");
       }
     }
     //y is file
@@ -120,7 +120,7 @@ class Game {
         c.setAttributeNS(null, "cy", y);
       }
       else{
-        alert("Can't move on");
+        //alert("Can't move on");
       }
     }
     if (step == "D") {
@@ -129,7 +129,7 @@ class Game {
         c.setAttributeNS(null, "cy", y);
       }
       else{
-        alert("Can't move on");
+        //alert("Can't move on");
       }
     }
   
@@ -140,9 +140,14 @@ class Game {
   }
 
   eraseIndividuals = () => {
+    console.log('BORRANDO')
+    console.log(this.generacionActual.length)
+
     this.generacionActual.forEach(element => {
+      console.log("hola");
       element.erase()
     });
+
   }
 
   drawIndividuals = ( poblacion ) => {
@@ -150,14 +155,37 @@ class Game {
     this.generacionActual = []
 
     poblacion.forEach(individuo => {
+      console.log(individuo.gen);
 
-      console.log(individuo.posicion[0], individuo.posicion[1]);
-      var newIndividuo = new dibujoIndividuo(individuo.etiqueta,this.s_w, this.s_h, this.ventana, this.SVG_NS, individuo.posicion[0],individuo.posicion[1] )
+      var newIndividuo = new dibujoIndividuo(individuo.etiqueta,this.s_w, this.s_h, this.ventana, this.SVG_NS, individuo.posicion[0],individuo.posicion[1], individuo.gen )
       this.generacionActual.push( newIndividuo )
     });
 
-
+    
   }
+
+  moveIndividuals = async() => {
+
+    var listaIndividuos = this.generacionActual
+
+
+    while( listaIndividuos.length != 0 ){
+
+      listaIndividuos.forEach(indiv => {
+
+        if (indiv.movimientos.length != 0) {
+          this.moveOn(indiv, indiv.movimientos[0])
+          indiv.movimientos = indiv.movimientos.slice(1)
+        } else{
+          listaIndividuos = listaIndividuos.filter(item => item !== indiv)
+        }
+        
+      })
+      await this.sleep(50);
+    }
+  }
+
+
   
 
 }

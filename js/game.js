@@ -12,7 +12,7 @@
  */
 class Game {
 
-  constructor(pMatrix_window_w, pMatrix_window_h, pM_rows, pM_columns, pVentana, pPattern, pRect, tablero) {
+  constructor(pMatrix_window_w, pMatrix_window_h, pM_rows, pM_columns, pVentana, pPattern, pRect, pTablero) {
 
     this.SVG_NS = "http://www.w3.org/2000/svg"
 
@@ -32,7 +32,7 @@ class Game {
     this.generacionActual = []
 
     this.movList = ["R", "D", "U", "L"]   //Lista de movimientos temporal
-    this.tablero = tablero
+    this.tablero = pTablero
   }
 
   /** 
@@ -66,22 +66,22 @@ class Game {
     s_grid.setAttribute("width", this.s_w)
     s_grid.setAttribute("height", this.s_h)
 
-    this.drawoObject();
+    //this.drawoObject();
   }
 
   /**
     * Dibuja los obstaculos con la información del constructor
   */
-  drawoObject = () => {
+  drawoObject = (pTablero) => {
     let elementFather = document.getElementById(this.ventana);      //Encuentra el elemento en dónde va a dibujar el obstaculo
     let rect, circle, ellipse;
     //Coloca los Atributos al elemento
     let ball_s_x = Math.floor(this.s_w / 2);
     let ball_s_y = Math.floor(this.s_h / 2);
     let pos_y, pos_x;
-    for (let i = 0; i < this.tablero.length; i++) {
-      for (let j = 0; j < this.tablero.length; j++) {
-        if (this.tablero[i][j] == 1) {
+    for (let i = 0; i < pTablero.length; i++) {
+      for (let j = 0; j < pTablero.length; j++) {
+        if (pTablero[i][j] == 1) {
           pos_x = j * this.s_w;
           pos_y = i * this.s_w;
 
@@ -89,11 +89,11 @@ class Game {
           rect.setAttributeNS(null, "id", "rect" + String(i));
           rect.setAttributeNS(null, "x", pos_x);
           rect.setAttributeNS(null, "y", pos_y);
-          rect.setAttributeNS(null, "width", "15");
-          rect.setAttributeNS(null, "height", "15");
+          rect.setAttributeNS(null, "width", this.s_w);
+          rect.setAttributeNS(null, "height", this.s_h);
           elementFather.appendChild(rect);
         }
-        if (this.tablero[i][j] == 2) {
+        if (pTablero[i][j] == 2) {
           pos_x = ball_s_x + j * this.s_w;
           pos_y = ball_s_y + i * this.s_w;
           circle = document.createElementNS(this.SVG_NS, "circle");
@@ -104,7 +104,7 @@ class Game {
           circle.setAttributeNS(null, "fill", "#39ff14");
           elementFather.appendChild(circle);
         }
-        if (this.tablero[i][j] == 3) {
+        if (pTablero[i][j] == 3) {
           pos_x = ball_s_x + j * this.s_w;
           pos_y = ball_s_y + i * this.s_w;
           circle = document.createElementNS(this.SVG_NS, "circle");
@@ -115,7 +115,7 @@ class Game {
           circle.setAttributeNS(null, "fill", "red");
           elementFather.appendChild(circle);
         }
-        if (this.tablero[i][j] == 4) {
+        if (pTablero[i][j] == 4) {
           pos_x = ball_s_x + j * this.s_w;
           pos_y = ball_s_y + i * this.s_w;
           ellipse = document.createElementNS(this.SVG_NS, "ellipse");
@@ -244,15 +244,15 @@ class Game {
     @param {Array} poblacion La población de la generación actual, generada por el Algoritmo Genético
    
   */
-  drawIndividuals = (poblacion) => {
+  drawIndividuals = (poblacion, fila_inicio, columna_inicio) => {
     //Antes de empezar borra todos los individuos de la generación pasada
     this.eraseIndividuals()
     this.generacionActual = []
 
     poblacion.forEach(individuo => {
-      console.log(individuo.gen);
-
-      var newIndividuo = new dibujoIndividuo(individuo.etiqueta, this.s_w, this.s_h, this.ventana, this.SVG_NS, individuo.posicion[0], individuo.posicion[1], individuo.gen)
+      //console.log(individuo.gen);
+      
+      var newIndividuo = new dibujoIndividuo(individuo.etiqueta, this.s_w, this.s_h, this.ventana, this.SVG_NS, fila_inicio, columna_inicio, individuo.gen)
       this.generacionActual.push(newIndividuo)
 
     });
@@ -284,11 +284,12 @@ class Game {
           this.moveOn(indiv, indiv.movimientos[0])
           indiv.movimientos = indiv.movimientos.slice(1)
         } else {
+          indiv.morir()
           listaIndividuos = listaIndividuos.filter(item => item !== indiv)  // Si se queda sin movimientos se elimina de la lista
         }
 
       })
-      await this.sleep(50);   //Espera un tiempo para el siguiente movimiento
+      await this.sleep(400);   //Espera un tiempo para el siguiente movimiento
     }
   }
 

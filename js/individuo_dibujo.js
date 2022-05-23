@@ -22,14 +22,17 @@ class dibujoIndividuo {
 
         this.ventana = pVentana
         
-        this.cx = Math.floor(this.s_w/2) + (init_column) * this.s_w   // Calcula la mitad del cuadrito, y le suma los espacios para pintarlo en la columna correspondiente 
+        var offset = Math.floor(Math.random() * Math.floor((this.s_w/4)))
 
-        this.cy = Math.floor(this.s_h/2) + (init_row) * this.s_h       // Calcula la mitad del alto del  cuadrito, y le suma los espacios para pintarlo en la fila correspondiente 
+        
+        this.cx = Math.floor(this.s_w/2 + offset) + (init_column) * this.s_w   // Calcula la mitad del cuadrito, y le suma los espacios para pintarlo en la columna correspondiente 
+
+        this.cy = Math.floor(this.s_h/2 + offset) + (init_row) * this.s_h       // Calcula la mitad del alto del  cuadrito, y le suma los espacios para pintarlo en la fila correspondiente 
 
         this.r  = Math.min( Math.floor(this.s_w/2), Math.floor(this.s_h/2) ) -  Math.floor((this.s_w/5)) //Calcular el radio de la bolita
         
-        this.stroke = "green"
-        this.fill = "yellow"
+        this.stroke = "green" 
+        this.fill = this.randColor()
 
         this.SVG_NS = pSVG_NS
         this.movimientos = pMovimientos
@@ -66,6 +69,15 @@ class dibujoIndividuo {
         //return circle;
     }
 
+    /**
+     * Genera colores aleatorios
+    */
+
+    randColor = () =>  {
+        return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0').toUpperCase();
+    }
+    
+
 
     /**
      * Borra el circulo del SVG
@@ -73,6 +85,17 @@ class dibujoIndividuo {
     erase = () => {
         let element = document.getElementById(this.id);
         element.remove()
+    }
+
+
+    /**
+     * Borra el circulo del SVG
+    */
+     morir = () => {
+        let circle = document.getElementById(this.id);
+    
+        circle.setAttributeNS(null, "stroke", "orange");
+        circle.setAttributeNS(null, "fill", "red");
     }
 
 

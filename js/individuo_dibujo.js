@@ -14,9 +14,9 @@
 class dibujoIndividuo {
 
 
-    constructor( id_individuo, pCuadro_width, pCuadro_height, pVentana, pSVG_NS, init_row, init_column, pMovimientos ){
+    constructor( individuo, pCuadro_width, pCuadro_height, pVentana, pSVG_NS, init_row, init_column ){
         
-        this.id = id_individuo
+        this.id = individuo.etiqueta
         this.s_w = pCuadro_width
         this.s_h = pCuadro_height
 
@@ -35,9 +35,10 @@ class dibujoIndividuo {
         this.fill = this.randColor()
 
         this.SVG_NS = pSVG_NS
-        this.movimientos = pMovimientos
+        this.movimientos = individuo.gen
 
         this.drawCircle()       // Pinta el circulo 
+        this.writeStats( individuo )
     }
 
     /**
@@ -83,8 +84,15 @@ class dibujoIndividuo {
      * Borra el circulo del SVG
     */
     erase = () => {
+        //Elimina el SVG de la Matriz 
         let element = document.getElementById(this.id);
         element.remove()
+
+        //Elimina el TR de la tabla de stats 
+        var indivrowTr = "tr" + this.id 
+        var trElement = document.getElementById(indivrowTr)
+        trElement.parentNode.removeChild(trElement);
+
     }
 
 
@@ -96,6 +104,48 @@ class dibujoIndividuo {
     
         circle.setAttributeNS(null, "stroke", "orange");
         circle.setAttributeNS(null, "fill", "red");
+    }
+
+
+    // this.gen = gen;
+    // this.posicion = posicion;
+    // this.premiosObtenidos = [];
+    // this.fitness = 0;
+    // this.fitnessPadre = fitnessPadre;
+    // this.vivo = true;
+    // this.llego = false;
+
+
+    writeStats = (individuo) => {
+        var table = document.getElementById("stats_table");
+
+
+        var row = table.insertRow(-1);
+        var rowId = "tr" + this.id
+
+        row.setAttribute("id",rowId )
+
+
+
+        var cell1 = row.insertCell(0);  //ID
+        var cell2 = row.insertCell(1);  //Gen
+        var cell3 = row.insertCell(2);  //PosFinal
+        var cell4 = row.insertCell(3);  //Premios
+        var cell5 = row.insertCell(4);  //Fitness
+        var cell6 = row.insertCell(5);  //Fitness Padre
+        var cell7 = row.insertCell(6);  //Sobrevive
+        var cell8 = row.insertCell(7);  //Llegó
+
+        // Add some text to the new cells:
+        cell1.innerHTML = this.id;
+        cell2.innerHTML = this.movimientos;
+        cell3.innerHTML = individuo.posicion
+        cell4.innerHTML = individuo.premiosObtenidos
+        cell5.innerHTML = individuo.fitness
+        cell6.innerHTML = individuo.fitnessPadre
+        cell7.innerHTML = individuo.vivo
+        cell8.innerHTML = individuo.llego
+
     }
 
 

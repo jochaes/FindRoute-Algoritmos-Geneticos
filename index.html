@@ -13,21 +13,13 @@
 </head>
 
 <body>
+  <header>
+    Proyecto 3 
+  </header>
 
-  <div>
-    <div class="container">
-      <svg id="window" width="750" height="550">
-        <defs>
-          <pattern id="grid"   width="15" height="15" patternUnits="userSpaceOnUse">
-            <rect  id ="rect" width="15" height="15" fill="url(#smallGrid)" />
-            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
-    </div>
-  
-      
+  <section>
+
+    <div>
       <form onsubmit="return false;" method="post" name="myForm">
 
         <label for="sizeMatrix">Tamaño de la Matriz (nxn)</label><br>
@@ -57,15 +49,46 @@
         <label for="maxGenerations">Cantidad Máxima de Generaciones (100-500)</label><br>
         <input type="number" id="maxGenerations" name="maxGenerations" min ="100" max="500" value="500"><br>
 
-
         <input type="submit" name="Empezar Ejecución" onclick="start()" />
       </form> 
+    </div>
 
+    <div class="container">
+      <svg id="window" width="750" height="550">
+        <defs>
+          <pattern id="grid"   width="15" height="15" patternUnits="userSpaceOnUse">
+            <rect  id ="rect" width="15" height="15" fill="url(#smallGrid)" />
+            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+  
+    
+
+    <div>
+      <table id="stats_table">
+        <tr>
+         <th>Stats</th>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <th>Gen</th>
+          <th>Pos_Final</th>
+          <th>Premios</th>
+          <th>Fitness</th>
+          <th>Fitness Padre</th>
+          <th>Vivo</th>
+          <th>Llego</th>
+        </tr>
+
+      </table>
+      
     </div>
 
 
-  </div>
+  </section>
 
 </body>
-
 </html>

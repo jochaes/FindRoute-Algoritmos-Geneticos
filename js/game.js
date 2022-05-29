@@ -230,7 +230,7 @@ class Game {
     
   */
   eraseIndividuals = () => {
-    console.log('Borrando Elementos de la Matriz')
+    console.log('Borrando Elementos de la Matriz y Tabla')
 
     this.generacionActual.forEach(element => {
       element.erase()
@@ -252,7 +252,7 @@ class Game {
     poblacion.forEach(individuo => {
       //console.log(individuo.gen);
       
-      var newIndividuo = new dibujoIndividuo(individuo.etiqueta, this.s_w, this.s_h, this.ventana, this.SVG_NS, fila_inicio, columna_inicio, individuo.gen)
+      var newIndividuo = new dibujoIndividuo(individuo,this.s_w, this.s_h, this.ventana, this.SVG_NS, fila_inicio, columna_inicio)
       this.generacionActual.push(newIndividuo)
 
     });

@@ -83,14 +83,14 @@ start = () => {
                  );
 
     //Hay que Revizar que los valores sean correctos 
-    newGame = new Game( 540, 540, sizeMatrix, sizeMatrix, "window", "grid", "rect" )
+    newGame = new Game( 350, 350, sizeMatrix, sizeMatrix, "window", "grid", "rect" )
     newGame.drawMatrix()
 
     ent =     new Entorno(sizeMatrix, populationSize, initPos, endPos, gene, obsPercentage, mutationPercentage, crossoverPercentage, maxGenerations);
     ent.generarPoblacionBase();
     ent.colocarPremio(5, 5);
     ent.colocarPremio(10, 11);
-    
+
     newGame.drawoObject(ent.tablero)        //Dibuja el Tablero
     newGame.drawIndividuals(ent.poblacion, ent.puntoInicial[0], ent.puntoInicial[1])  //Dibuja la población Base
 

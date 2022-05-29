@@ -16,14 +16,96 @@ section {
 
 
 
+
+
+/* *+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+* Obstaculos  *+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*  */
+.obstaculo {
+
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: rotate(45deg);
+    stroke: rgb(255, 0, 0);
+    stroke-dasharray: 5;
+      
+
+    fill: #107E7D;
+    /* animation: rotation 1s infinite linear; */
+    animation: changeColor 4s infinite
+  }
   
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+
+    }
+    to {
+      transform: rotate(180deg);
+
+    }
+  }
+
+  @keyframes changeColor {
+    0% {fill: #D8D8D8; }
+    25%  {fill: #2F4858; }
+    50%  {fill:#D8D8D8; }
+    75%  {fill:#2F4858 }
+    100% {fill: #D8D8D8; }
+  }
+  
+  
+
+/* *+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+* Individuos *+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*  */
+circle.bolita {
+    stroke-dasharray: 5;
+    stroke-dashoffset: 50;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    animation: changeColorAlive 2s infinite, strokeAnimation 3s infinite;
+}
+
+@keyframes changeColorAlive {
+
+    20% {
+        stroke: #E3B505;
+    }
+
+    40%{
+        stroke: #95190C;
+    }
+
+    60% {
+        stroke: #610345;
+    }
+
+    80%{
+        stroke: #107E7D;
+    }
+
+    100%{
+        stroke: #044B7F;
+    }
+
+}
+
+@keyframes strokeAnimation {
+    50% {
+        stroke-dashoffset: 90px, 30px, 50px, 20px;
+        stroke-dasharray: 60px, 20px, 7px, 3px;
+      }
+}
+
+
 
 circle.bolitaDeath {
 
-    animation: changeColor 0.5s infinite;
+
+    stroke: #ff4343;
+    animation: changeColorDeath 0.5s infinite;
 }
   
-@keyframes changeColor {
-    from {fill: red;}
-    to {fill: blue;}
+@keyframes changeColorDeath {
+    from {fill: #D52941;}
+    to {fill: #1a003f;}
 }
+

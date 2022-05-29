@@ -83,10 +83,10 @@ start = () => {
                  );
 
     //Hay que Revizar que los valores sean correctos 
-    newGame = new Game( 350, 350, sizeMatrix, sizeMatrix, "window", "grid", "rect" )
+    newGame = new Game( 550, 550, sizeMatrix, sizeMatrix, "window", "grid", "rect" )
     newGame.drawMatrix()
 
-    ent =     new Entorno(sizeMatrix, populationSize, initPos, endPos, gene, obsPercentage, mutationPercentage, crossoverPercentage, maxGenerations);
+    ent = new Entorno(sizeMatrix, populationSize, initPos, endPos, gene, obsPercentage, mutationPercentage, crossoverPercentage, maxGenerations);
     ent.generarPoblacionBase();
     ent.colocarPremio(5, 5);
     ent.colocarPremio(10, 11);

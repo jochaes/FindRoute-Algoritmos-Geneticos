@@ -82,15 +82,16 @@ class Game {
     for (let i = 0; i < pTablero.length; i++) {
       for (let j = 0; j < pTablero.length; j++) {
         if (pTablero[i][j] == 1) {
-          pos_x = j * this.s_w;
-          pos_y = i * this.s_w;
+          pos_x = j * this.s_w + this.s_w/4;
+          pos_y = i * this.s_w + this.s_h/4;
 
           rect = document.createElementNS(this.SVG_NS, "rect");   
           rect.setAttributeNS(null, "id", "rect" + String(i));
+          rect.setAttributeNS(null, "class", "obstaculo")
           rect.setAttributeNS(null, "x", pos_x);
           rect.setAttributeNS(null, "y", pos_y);
-          rect.setAttributeNS(null, "width", this.s_w);
-          rect.setAttributeNS(null, "height", this.s_h);
+          rect.setAttributeNS(null, "width", this.s_w/2);
+          rect.setAttributeNS(null, "height", this.s_h/2);
           elementFather.appendChild(rect);
         }
         if (pTablero[i][j] == 2) {
@@ -289,7 +290,7 @@ class Game {
         }
 
       })
-      await this.sleep(100);   //Espera un tiempo para el siguiente movimiento
+      await this.sleep(1000);   //Espera un tiempo para el siguiente movimiento
     }
   }
 

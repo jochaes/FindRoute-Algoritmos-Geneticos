@@ -1,3 +1,4 @@
+
 /**
     @class dibujoIndividuo
     @classdesc Se encarga de dibujar los individuos en la interfaz 
@@ -31,8 +32,7 @@ class dibujoIndividuo {
 
         this.r  = Math.min( Math.floor(this.s_w/2), Math.floor(this.s_h/2) ) -  Math.floor((this.s_w/5)) //Calcular el radio de la bolita
         
-        this.stroke = "green" 
-        this.fill = this.randColor()
+        this.fill = randomColor()
 
         this.SVG_NS = pSVG_NS
         this.movimientos = individuo.gen
@@ -47,7 +47,7 @@ class dibujoIndividuo {
     drawCircle = () => {
         let elementFather = document.getElementById(this.ventana);      //Encuentra el elemento en dónde va a dibujar el circulo
         let circle = document.createElementNS(this.SVG_NS, "circle");   //Crea el SVG del  Circulo
-        
+        var strWidth = this.r/4
         //Coloca los Atributos al elemento
         circle.setAttributeNS(null, "id", this.id);
 
@@ -57,7 +57,7 @@ class dibujoIndividuo {
         circle.setAttributeNS(null, "cy", this.cy);
 
         circle.setAttributeNS(null, "r", this.r);
-        circle.setAttributeNS(null, "stroke", this.stroke);
+        circle.setAttributeNS(null, "stroke-width", strWidth);
         circle.setAttributeNS(null, "fill", this.fill);
 
 
@@ -104,7 +104,10 @@ class dibujoIndividuo {
      morir = () => {
         let circle = document.getElementById(this.id);
         circle.setAttributeNS(null, "class", "bolitaDeath");
-    
+
+        var indivrowTr = "tr" + this.id 
+        var trElement = document.getElementById(indivrowTr)    
+        trElement.firstChild.setAttribute("bgcolor", '#FFFFFF')
         // circle.setAttributeNS(null, "stroke", "orange");
         // circle.setAttributeNS(null, "fill", "red");
     }
@@ -140,8 +143,9 @@ class dibujoIndividuo {
         var cell8 = row.insertCell(7);  //Llegó
 
         // Add some text to the new cells:
-        cell1.innerHTML = this.id;
-        cell2.innerHTML = this.movimientos;
+        cell1.innerHTML = this.id
+        cell1.setAttribute("bgcolor", this.fill)
+        cell2.innerHTML = this.movimientos
         cell3.innerHTML = individuo.posicion
         cell4.innerHTML = individuo.premiosObtenidos
         cell5.innerHTML = individuo.fitness

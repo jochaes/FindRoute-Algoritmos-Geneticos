@@ -51,6 +51,8 @@ class dibujoIndividuo {
         //Coloca los Atributos al elemento
         circle.setAttributeNS(null, "id", this.id);
 
+        circle.setAttributeNS(null, "class", "bolita")
+
         circle.setAttributeNS(null, "cx", this.cx);
         circle.setAttributeNS(null, "cy", this.cy);
 
@@ -101,9 +103,10 @@ class dibujoIndividuo {
     */
      morir = () => {
         let circle = document.getElementById(this.id);
+        circle.setAttributeNS(null, "class", "bolitaDeath");
     
-        circle.setAttributeNS(null, "stroke", "orange");
-        circle.setAttributeNS(null, "fill", "red");
+        // circle.setAttributeNS(null, "stroke", "orange");
+        // circle.setAttributeNS(null, "fill", "red");
     }
 
 

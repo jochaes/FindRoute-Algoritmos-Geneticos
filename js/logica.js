@@ -106,6 +106,13 @@
     this.generacion++;
     //console.log("~~~~~~~~~~~~~~~~~~~~~~~~\nGeneracion: " + this.generacion);
     for (let i = 0; i < this.poblacion.length; i++) {
+      // borrar
+      if (this.poblacion[i].posicion[0] == this.puntoFinal[0] && this.poblacion[i].posicion[1] == this.puntoFinal[1]) {
+        this.individuoGanador = this.poblacion[i];
+        this.encontroSolucion = true;
+        return;
+      }
+      // borrar
       this.poblacion[i].posicion = [this.puntoInicial[0], this.puntoInicial[1]];
       this.poblacion[i].fitness = 0;
       this.poblacion[i].vivir();

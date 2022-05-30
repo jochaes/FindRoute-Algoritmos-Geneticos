@@ -59,7 +59,10 @@ const showSolucion  = async() => {
 //showSolucion()    //Empieza a ejecutar el programa 
 
 start = () => {
-
+    if (ent != undefined) {
+        location.reload();
+        return;
+    }
     var sizeMatrix          = parseInt( document.getElementById("sizeMatrix").value )
     if (sizeMatrix < 10 || sizeMatrix > 35) {
         alert("El tamaño de la matriz debe estar entre 10 y 35")
@@ -75,8 +78,8 @@ start = () => {
         alert("La posición inicial debe estar en formato (x,y)")
         return
     }
-    if (initPos[0] < 1 || initPos[0] > (sizeMatrix-1) || initPos[1] < 1 || initPos[1] > (sizeMatrix-1)) {
-        alert("La posición inicial debe estar entre 1 y " + (sizeMatrix-1))
+    if (initPos[0] < 2 || initPos[0] > (sizeMatrix-2) || initPos[1] < 2 || initPos[1] > (sizeMatrix-2)) {
+        alert("La posición inicial debe estar entre 1 y " + (sizeMatrix-2))
         return
     }
     var endPos              = document.getElementById("endPos").value.split(",").map(Number)
@@ -84,8 +87,8 @@ start = () => {
         alert("La posición final debe estar en formato (x,y)")
         return
     }
-    if (endPos[0] < 1 || endPos[0] > (sizeMatrix-1) || endPos[1] < 1 || endPos[1] > (sizeMatrix-1)) {
-        alert("La posición final debe estar entre 1 y " + (sizeMatrix-1))
+    if (endPos[0] < 2 || endPos[0] > (sizeMatrix-2) || endPos[1] < 2 || endPos[1] > (sizeMatrix-2)) {
+        alert("La posición final debe estar entre 1 y " + (sizeMatrix-2))
         return
     }
     var gene                = document.getElementById("gene").value

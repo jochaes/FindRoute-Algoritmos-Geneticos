@@ -138,9 +138,9 @@ class dibujoIndividuo {
         var cell3 = row.insertCell(2);  //PosFinal
         var cell4 = row.insertCell(3);  //Premios
         var cell5 = row.insertCell(4);  //Fitness
-        var cell6 = row.insertCell(5);  //Fitness Padre
-        var cell7 = row.insertCell(6);  //Sobrevive
-        var cell8 = row.insertCell(7);  //Llegó
+        // var cell6 = row.insertCell(5);  //Fitness Padre
+        // var cell7 = row.insertCell(6);  //Sobrevive
+        // var cell8 = row.insertCell(7);  //Llegó
 
         // Add some text to the new cells:
         cell1.innerHTML = this.id
@@ -149,9 +149,9 @@ class dibujoIndividuo {
         cell3.innerHTML = individuo.posicion
         cell4.innerHTML = individuo.premiosObtenidos
         cell5.innerHTML = individuo.fitness
-        cell6.innerHTML = individuo.fitnessPadre
-        cell7.innerHTML = individuo.vivo
-        cell8.innerHTML = individuo.llego
+        // cell6.innerHTML = individuo.fitnessPadre
+        // cell7.innerHTML = individuo.vivo
+        // cell8.innerHTML = individuo.llego
 
     }
 

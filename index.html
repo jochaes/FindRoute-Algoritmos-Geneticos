@@ -15,7 +15,7 @@
 
 <body>
   <header>
-    Proyecto 3 
+    FindRoute: Algoritmos Genéticos
   </header>
 
   <section>
@@ -38,23 +38,23 @@
         <label for="gene">Gen Inicial</label><br>
         <input type="text" id="gene" name="gene" placeholder="UDLR"><br>
 
-        <label for="obsPercentage">Porcentaje de Obstaculos (0% - 100%) </label><br>
+        <label for="obsPercentage">Porcentaje de Obstáculos </label><br>
         <input type="number" id="obsPercentage" name="obsPercentage" min ="0" max="100" value="10"><br>
 
-        <label for="mutationPercentage">Porcentaje de Mutación (10% - 80%)</label><br>
+        <label for="mutationPercentage">Porcentaje de Mutación </label><br>
         <input type="number" id="mutationPercentage" name="mutationPercentage" min ="10" max="80" value="10"><br>
 
-        <label for="crossoverPercentage">Porcentaje de Cruce (10% - 80%)</label><br>
+        <label for="crossoverPercentage">Porcentaje de Cruce </label><br>
         <input type="number" id="crossoverPercentage" name="crossoverPercentage" min ="10" max="80" value="15"><br>
 
-        <label for="maxGenerations">Cantidad Máxima de Generaciones (100-500)</label><br>
+        <label for="maxGenerations">Generación máxima </label><br>
         <input type="number" id="maxGenerations" name="maxGenerations" min ="100" max="500" value="500"><br>
 
-        <input type="submit" name="Empezar Ejecución" onclick="start()" />
+        <input type="submit" name="Empezar" value="Run" onclick="start()" />
       </form> 
     </div>
 
-    <div class="container">
+    <div class="container"> 
       <svg id="window" width="550" height="550">
         <defs>
           <pattern id="grid"   width="15" height="15" patternUnits="userSpaceOnUse">
@@ -68,16 +68,16 @@
   
     
 
-    <div>
+    <div class="table_container">
       <table id="stats_table">
         <tr>
          <th>Stats</th>
         </tr>
         <tr>
-          <th>ID</th>
-          <th>Gen</th>
-          <th>Pos_Final</th>
-          <th>Premios</th>
+          <th>ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th>Gen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th>Pos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th>Premios&nbsp;&nbsp;</th>
           <th>Fitness</th>
         </tr>
 

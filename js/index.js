@@ -61,14 +61,60 @@ const showSolucion  = async() => {
 start = () => {
 
     var sizeMatrix          = parseInt( document.getElementById("sizeMatrix").value )
+    if (sizeMatrix < 10 || sizeMatrix > 35) {
+        alert("El tamaño de la matriz debe estar entre 10 y 35")
+        return
+    }
     var populationSize      = parseInt( document.getElementById("populationSize").value )
+    if (populationSize < 8 || populationSize > 20) {
+        alert("El tamaño de la población debe estar entre 8 y 20")
+        return
+    }
     var initPos             = document.getElementById("initPos").value.split(",").map(Number)
+    if (initPos.length != 2) {
+        alert("La posición inicial debe estar en formato (x,y)")
+        return
+    }
+    if (initPos[0] < 1 || initPos[0] > (sizeMatrix-1) || initPos[1] < 1 || initPos[1] > (sizeMatrix-1)) {
+        alert("La posición inicial debe estar entre 1 y " + (sizeMatrix-1))
+        return
+    }
     var endPos              = document.getElementById("endPos").value.split(",").map(Number)
+    if (endPos.length != 2) {
+        alert("La posición final debe estar en formato (x,y)")
+        return
+    }
+    if (endPos[0] < 1 || endPos[0] > (sizeMatrix-1) || endPos[1] < 1 || endPos[1] > (sizeMatrix-1)) {
+        alert("La posición final debe estar entre 1 y " + (sizeMatrix-1))
+        return
+    }
     var gene                = document.getElementById("gene").value
+    // Check if gene only contains the characters: L, D, U, R
+    if (!gene.match(/^[LDUR]+$/) && gene.length != 0) {
+        alert("El genótipo debe contener solo los caracteres: L, D, U, R")
+        return
+    }
     var obsPercentage       = parseInt (document.getElementById("obsPercentage").value) / 100
+    if (obsPercentage < 0.05 || obsPercentage > 0.2) {
+        alert("El porcentaje de obstáculos debe estar entre 0 y 100")
+        return
+    }
     var mutationPercentage  = parseInt (document.getElementById("mutationPercentage").value) /100
+    if (mutationPercentage < 0 || mutationPercentage > 0.8) {
+        alert("El porcentaje de mutación debe estar entre 0 y 80")
+        return  
+    }
     var crossoverPercentage = parseInt (document.getElementById("crossoverPercentage").value) /100
+    if (crossoverPercentage < 0 || crossoverPercentage > 0.8) {
+        alert("El porcentaje de cruce debe estar entre 0 y 80")
+        return
+    }
     var maxGenerations      = parseInt (document.getElementById("maxGenerations").value)
+    if (maxGenerations < 100 || maxGenerations > 500) {
+        alert("El número de generaciones debe estar entre 100 y 500")
+        return
+    }
+
 
 
     console.log(  "Tam Matriz:" + sizeMatrix + "\n"

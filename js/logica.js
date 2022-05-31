@@ -161,7 +161,8 @@
       hijo.vivir();
       hijo.calcularFitness();
       // Si el hijo que se originó es competente, lo agregamos a la población.
-      if (hijo.posicion[0] == this.puntoInicial[0] && hijo.posicion[1] == this.puntoInicial[1] || hijo.fitness == 0) {
+      if (hijo.posicion[0] == this.puntoFinal[0] && hijo.posicion[1] == this.puntoFinal[1] || hijo.fitness == 0) {
+        hijo.etiqueta = "Individuo_" + poblacionNueva.length;
         poblacionNueva.push(hijo);
         this.encontroSolucion = true;
         continue;        

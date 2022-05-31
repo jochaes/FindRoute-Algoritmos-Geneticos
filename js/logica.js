@@ -102,6 +102,7 @@
    * @returns {boolean} true si encontró la solución, false si no.
    */
   simularEtapa() {
+    if (this.encontroSolucion) { return; console.log(`>>>>>>> Encontro solucion <<<<<<<`); }
     if (this.generacion == this.maxGeneraciones) { this.encontroSolucion = true; return; }
     this.generacion++;
     //console.log("~~~~~~~~~~~~~~~~~~~~~~~~\nGeneracion: " + this.generacion);
@@ -134,6 +135,7 @@
 
   /** Genera una nueva población, considerando que ya se pasó una etapa inicial de la simulación. */
   generarNuevaPoblacion() {
+    if (this.encontroSolucion) { return; console.log(`>>>>>>> Encontro solucion <<<<<<<`); }
     // Ordenamos a la población por fitness y se seleccionan los cuatro mejores.
     let poblacionOrdenada = this.poblacion.sort((a, b) => { return a.fitness - b.fitness; });
     let poblacionNueva = [];
@@ -159,6 +161,11 @@
       hijo.vivir();
       hijo.calcularFitness();
       // Si el hijo que se originó es competente, lo agregamos a la población.
+      if (hijo.posicion[0] == this.puntoInicial[0] && hijo.posicion[1] == this.puntoInicial[1] || hijo.fitness == 0) {
+        poblacionNueva.push(hijo);
+        this.encontroSolucion = true;
+        continue;        
+      }
       if (hijo.fitness < ((poblacionOrdenada[0].fitness + poblacionOrdenada[1].fitness) * 0.88)) {
         hijo.etiqueta = ("Individuo_" + poblacionNueva.length);
         poblacionNueva.push(hijo);

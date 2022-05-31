@@ -17,17 +17,17 @@ También características que tendrán las generaciones o individuos:
 - Gen inicial (opcional)
 - Generación máxima permitida
 
-## Algorithms :thinking:
+## Algoritmo :thinking:
+![image](https://user-images.githubusercontent.com/89949216/171193733-17d6400b-994e-4a36-b7ed-b35765c6f3dc.png)
 
+Se utilizó este acercamiento con el objetivo de llegar a la menor cantidad de generaciones posibles.
 
-## How to run the project 🤖
+## Ejecutar el programa 🤖
+Se puede ejecutar la aplicación en [esta página hosteada en GitHub pages](https://hros19.github.io/FindRoute-Algoritmos-Geneticos/).
 
 ## How to use the app ✍️
-
-
-
-
-## Conclusion
+La aplicación es automática, podrá elegir distintos parámetros que afectarán el comportamiento de los individuos, como también características del entorno anteriormente mencionadas.
+Una vez elegidos los parámetros podrá ejecutar la aplicación para visualizar el comportamiento del algoritmo genético.
 
 
 ## Authors 🤓
@@ -37,8 +37,3 @@ También características que tendrán las generaciones o individuos:
 
 ![Benjamin's GitHub stats](https://github-readme-stats.vercel.app/api?username=JoshJohnson2001&bg_color=60,1c3773,0055fb&title_color=ff5d05&text_color=fff&show_icons=true&count_private=true&icon_color=FF3838)
 
-## Credits :bow:
-- We want to thank [Geekforgeeks](https://www.geeksforgeeks.org), we use this [algorithm](https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/)
-
-## License
-This project is currently using [MIT license](https://www.mit.edu/~amini/LICENSE.md)

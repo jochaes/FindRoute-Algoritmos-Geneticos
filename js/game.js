@@ -121,6 +121,7 @@ class Game {
           pos_y = ball_s_y + i * this.s_w;
           ellipse = document.createElementNS(this.SVG_NS, "ellipse");
           ellipse.setAttributeNS(null, "id", "obsequio" + String(j));
+          ellipse.setAttributeNS(null, "class", "premio");
           ellipse.setAttributeNS(null, "cx", pos_x);
           ellipse.setAttributeNS(null, "cy", pos_y);
           ellipse.setAttributeNS(null, "rx", "7");

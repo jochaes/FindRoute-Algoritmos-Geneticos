@@ -9,7 +9,7 @@
     @param {string} pSVG_NS         "Libreria" de los SVG
     @param {int}    init_row        Indice de la fila inicial
     @param {int}    init_column     Indice de la columna inicila 
-    @param {string} pMovimientos    String con los movimientos del individuo en la generación actual
+    @param {string} pMovimientos   f String con los movimientos del individuo en la generación actual
     
  */
 class dibujoIndividuo {
@@ -107,7 +107,10 @@ class dibujoIndividuo {
 
         var indivrowTr = "tr" + this.id 
         var trElement = document.getElementById(indivrowTr)    
-        trElement.firstChild.setAttribute("bgcolor", '#FFFFFF')
+        trElement.firstChild.removeAttribute("bgcolor")
+        trElement.firstChild.setAttribute("class", "cellIdDeath")
+
+        
         // circle.setAttributeNS(null, "stroke", "orange");
         // circle.setAttributeNS(null, "fill", "red");
     }
@@ -149,6 +152,13 @@ class dibujoIndividuo {
         cell3.innerHTML = individuo.posicion
         cell4.innerHTML = individuo.premiosObtenidos
         cell5.innerHTML = individuo.fitness
+
+        cell2.setAttribute("class", "cellInfo")
+        cell3.setAttribute("class", "cellInfo")
+        cell4.setAttribute("class", "cellInfo")
+        cell5.setAttribute("class", "cellInfo")
+        
+
         // cell6.innerHTML = individuo.fitnessPadre
         // cell7.innerHTML = individuo.vivo
         // cell8.innerHTML = individuo.llego

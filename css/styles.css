@@ -82,7 +82,6 @@ body {
 }
 
 
-
 /* --------------------------------------- */
 
 
@@ -102,19 +101,36 @@ label {
     margin-left: 20px;
 }
 
+td.cellIdDeath {
+  
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px) saturate(100%) contrast(45%) brightness(130%);
+}
+
+.tableTitle, .tableRowTitle{
+  background-color: #86cdff70;
+  backdrop-filter: blur(10px) saturate(100%) contrast(45%) brightness(130%);
+
+}
+
 table {
+
     table-layout:fixed;
     border-collapse: collapse;
     border-spacing: 0;
     margin: 0;
     padding: 0;
-    background-color: #86cdff;
-    color: rgb(0, 0, 0)
-;    border-radius: 5px;
+
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px) saturate(100%) contrast(45%) brightness(130%);
+    
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
     box-shadow: 0px 0px 10px #000;
     font: normal normal normal 0.9em/0.9em 'Open Sans', sans-serif;
 }
 /* XDD */
+
 
 
 input {
@@ -181,16 +197,6 @@ section {
     animation: changeColor 4s infinite
   }
   
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-
-    }
-    to {
-      transform: rotate(180deg);
-
-    }
-  }
 
   @keyframes changeColor {
     0% {fill: #D8D8D8; }
@@ -246,8 +252,6 @@ circle.bolita {
 
 
 circle.bolitaDeath {
-
-
     stroke: #ff4343;
     animation: changeColorDeath 0.5s infinite;
 }
@@ -257,3 +261,30 @@ circle.bolitaDeath {
     to {fill: #1a003f;}
 }
 
+ellipse.premio {
+
+  transform-box: fill-box;
+  transform-origin: center;
+
+  stroke: #fff832;
+  animation: changeColorPremio 0.2s infinite, rotation 0.5s infinite linear;
+      /* animation: rotation 1s infinite linear; */
+
+}
+
+@keyframes changeColorPremio {
+  from {fill: #f2ff01;}
+  to {fill: #b3c701;}
+}
+
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+
+  }
+  to {
+    transform: rotate(180deg);
+
+  }
+}

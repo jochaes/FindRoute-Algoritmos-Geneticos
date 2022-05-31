@@ -1,3 +1,4 @@
+
 /**
     @class Game
     @classdesc Se encarga de manejar los aspectos graficos y de movimientos dentro de la matriz que se dibuja en el HTML 
@@ -291,7 +292,8 @@ class Game {
         }
 
       })
-      await this.sleep(300);   //Espera un tiempo para el siguiente movimiento
+      console.log('Moviendo Individuos ' + velocidadMov)
+      await this.sleep(Math.abs((velocidadMov*10) - 1000));   //Espera un tiempo para el siguiente movimiento
     }
   }
 

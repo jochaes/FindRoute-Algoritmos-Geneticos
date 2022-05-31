@@ -42,7 +42,8 @@ const showSolucion  = async() => {
 
     let terminado = false;
     while (!terminado) {
-        ent.simularEtapa();                      //Cada etapa es una generación 
+        ent.simularEtapa();
+        if (ent.encontroSolucion) { break; }                      //Cada etapa es una generación 
         var gen = "*******Info Generación " + ent.generacion + " *******" 
         console.log(gen);
         let titulo = document.getElementById("stats_title"); 
@@ -76,15 +77,9 @@ start = () => {
         return;
     }
     var sizeMatrix          = parseInt( document.getElementById("sizeMatrix").value )
-    if (sizeMatrix < 10 || sizeMatrix > 35) {
-        alert("El tamaño de la matriz debe estar entre 10 y 35")
-        return
-    }
+    if (sizeMatrix < 10 || sizeMatrix > 35) { return }
     var populationSize      = parseInt( document.getElementById("populationSize").value )
-    if (populationSize < 8 || populationSize > 20) {
-        alert("El tamaño de la población debe estar entre 8 y 20")
-        return
-    }
+    if (populationSize < 8 || populationSize > 20) { return }
     var initPos             = document.getElementById("initPos").value.split(",").map(Number)
     if (initPos.length != 2) {
         alert("La posición inicial debe estar en formato (x,y)")
@@ -110,25 +105,13 @@ start = () => {
         return
     }
     var obsPercentage       = parseInt (document.getElementById("obsPercentage").value) / 100
-    if (obsPercentage < 0.05 || obsPercentage > 0.2) {
-        alert("El porcentaje de obstáculos debe estar entre 5 y 20")
-        return
-    }
+    if (obsPercentage < 0.05 || obsPercentage > 0.2) { return }
     var mutationPercentage  = parseInt (document.getElementById("mutationPercentage").value) /100
-    if (mutationPercentage < 0 || mutationPercentage > 0.8) {
-        alert("El porcentaje de mutación debe estar entre 0 y 80")
-        return  
-    }
+    if (mutationPercentage < 0 || mutationPercentage > 0.8) {  return }
     var crossoverPercentage = parseInt (document.getElementById("crossoverPercentage").value) /100
-    if (crossoverPercentage < 0 || crossoverPercentage > 0.8) {
-        alert("El porcentaje de cruce debe estar entre 0 y 80")
-        return
-    }
+    if (crossoverPercentage < 0 || crossoverPercentage > 0.8) {  return }
     var maxGenerations      = parseInt (document.getElementById("maxGenerations").value)
-    if (maxGenerations < 100 || maxGenerations > 500) {
-        alert("El número de generaciones debe estar entre 100 y 500")
-        return
-    }
+    if (maxGenerations < 100 || maxGenerations > 500) { return }
 
 
 

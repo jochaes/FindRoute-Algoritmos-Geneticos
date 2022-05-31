@@ -27,18 +27,30 @@
 // //ent.imprimirTablero();
 
 
+let slider = document.getElementById("myRange");
+
 let newGame 
 let ent 
+let velocidadMov = slider.value;
 
-
+slider.oninput = function() {
+  slider.innerHTML = this.value;
+  velocidadMov = this.value;
+}
 
 const showSolucion  = async() => {
 
     let terminado = false;
-    while (!terminado) { 
+    while (!terminado) {
         ent.simularEtapa();                      //Cada etapa es una generación 
         var gen = "*******Info Generación " + ent.generacion + " *******" 
         console.log(gen);
+        let titulo = document.getElementById("stats_title"); 
+        let tituloNuevo = ("<h3> Generación actual: " + ent.generacion + "</h3>");
+        titulo.innerHTML = tituloNuevo;
+        titulo.style.backgroundColor = "black";
+        //titulo.innerText = tituloNuevo.replace(/(\r\n|\n|\r)/gm, "");
+
 
         ent.poblacion.forEach(element => {
             var indiv = element.etiqueta + " | " + element.gen + " | " + element.fitness + " | " + element.posicion + " | " + element.premiosObtenidos.length + " ~ " + element.premiosObtenidos.toString();
@@ -99,7 +111,7 @@ start = () => {
     }
     var obsPercentage       = parseInt (document.getElementById("obsPercentage").value) / 100
     if (obsPercentage < 0.05 || obsPercentage > 0.2) {
-        alert("El porcentaje de obstáculos debe estar entre 0 y 100")
+        alert("El porcentaje de obstáculos debe estar entre 5 y 20")
         return
     }
     var mutationPercentage  = parseInt (document.getElementById("mutationPercentage").value) /100

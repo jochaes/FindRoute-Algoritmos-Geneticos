@@ -382,6 +382,7 @@ class Individuo {
         let movContrario = this.obtenerMovContrario(this.gen.charAt(this.gen.length - 1));
         if (movimiento == movContrario) { continue; }
       }
+      if (this.entorno.tablero[this.posicion[0]][this.posicion[1]] == 3) { this.llego = true; return; }
       this.gen += movimiento;
       if (!this.mover(movimiento)) { break; }
     }
@@ -398,6 +399,7 @@ class Individuo {
     let x = this.posicion[0];
     let y = this.posicion[1];
     // Verificamos que no se esté moviendo desde la meta
+    
     if (this.entorno.tablero[x][y] == 3 || this.entorno.tablero[x][y] == 1) { return false; }
     if (this.entorno.tablero[x][y] == 4 && this.premiosObtenidos.length <= 5) {
       let agregarPremio = true;

@@ -43,7 +43,7 @@ const showSolucion  = async() => {
     let terminado = false;
     while (!terminado) {
         ent.simularEtapa();
-        if (ent.encontroSolucion) { break; }                      //Cada etapa es una generación 
+        //Cada etapa es una generación 
         var gen = "*******Info Generación " + ent.generacion + " *******" 
         console.log(gen);
         let titulo = document.getElementById("stats_title"); 
